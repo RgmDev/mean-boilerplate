@@ -106,8 +106,6 @@ Proyecto base con MEAN stack (MongoDB, Express, Angular y Nodejs), contiene gest
 
 ## Comenzando 🚀
 
-git clone 
-
 _Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas._
 
 Mira **Deployment** para conocer como desplegar el proyecto.
@@ -115,21 +113,39 @@ Mira **Deployment** para conocer como desplegar el proyecto.
 
 ### Pre-requisitos 📋
 
-Node 
-Mongo (Windows)
-Angular
-git
+* [git](https://git-scm.com/)
+* [Nodejs](https://nodejs.org/es/)
+* [MongoDB](https://www.mongodb.com/es)
 
-_Que cosas necesitas para instalar el software y como instalarlas_
+- Windows
+Crear el directorio **C:/data/db**
+Levantar el servicio **mongod.exe**
+**mongod.exe** para consola de consulta MongoDB
 
-```
-Da un ejemplo
+* [Angular](https://angular.io/)
+```sh
+npm install -g @angular/cli
 ```
 
 ### Instalación 🔧
 
-nmp install??? en ambos directorios 
+Copiar el repositorio
+```sh
+git clone git@github.com:RgmDev/mean-boilerplate.git
+```
+
+Iniciar el api
+```sh
+cd api
 npm start
+```
+
+Inciar el front
+```sh
+cd client
+npm install 
+npm start
+```
 
 _Una serie de ejemplos paso a paso que te dice lo que debes ejecutar para tener un entorno de desarrollo ejecutandose_
 
