@@ -16,5 +16,7 @@ api.post('/login', userController.loginUser)
 api.post('/uploadImageUser/:id', [md_auth.ensureAuth, md_upload], userController.uploadImageUser)
 api.post('/uploadImage', md_upload, userController.uploadImage)
 api.get('/getImageUser/:imageFile', userController.getImageFile)
+api.get('/users', md_auth.ensureAuth, userController.getUsers)
+api.delete('/user/:id', md_auth.ensureAuth, userController.deleteUser)
 
 module.exports = api

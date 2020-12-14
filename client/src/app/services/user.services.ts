@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import {Http, Response, Headers} from '@angular/http'
+import {Http, Response, Headers, RequestOptions} from '@angular/http'
 import 'rxjs/add/operator/map'
 import { Observable } from 'rxjs/Observable'
 import { GLOBAL } from './global'
@@ -17,40 +17,35 @@ export class UserService{
   }
 
   singup(user_to_login, gethash = null){
-
     if(gethash != null){
       user_to_login.getHash = gethash
     }
-
     let json = JSON.stringify(user_to_login)
     let params = json
     let headers = new Headers({'Content-Type': 'application/json'})
-    
     return this._http.post(this.url+'login', params, {headers: headers})
       .map(res => res.json())
-
   }
 
   register(user_to_register){
     let json = JSON.stringify(user_to_register)
     let params = json
     let headers = new Headers({'Content-Type': 'application/json'})
-    
     return this._http.post(this.url+'saveUser', params, {headers: headers})
       .map(res => res.json())  
   }
 
   update_user(user_to_update){
+    console.log(user_to_update)
     let json = JSON.stringify(user_to_update)
     let params = json
     let headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': this.getToken()
     })
-    
     return this._http.put(this.url+'updateUser/'+user_to_update._id, params, {headers: headers})
       .map(res => res.json())  
-
+  
   }
 
   getIdentity(){
@@ -71,6 +66,26 @@ export class UserService{
       this.token = null
     }
     return this.token
+  }
+
+  getUsers(){
+    let headers = new Headers({
+      'Content-type': 'application/json',
+      'Authorization': this.getToken()
+    })
+    let options = new RequestOptions({ headers : headers })
+    return this._http.get(this.url+'users', options)
+      .map(res => res.json())
+  }
+
+  deleteUser(id_user){
+    let headers = new Headers({
+      'Content-type': 'application/json',
+      'Authorization': this.getToken()
+    })
+    let options = new RequestOptions({ headers : headers })
+    return this._http.delete(this.url+'user/'+id_user, options)
+      .map(res => res.json())
   }
 
 

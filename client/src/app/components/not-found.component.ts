@@ -4,17 +4,16 @@ import { Router, ActivatedRoute, Params } from '@angular/router'
 import { GLOBAL } from '../services/global'
 import { UserService } from '../services/user.services'
 
-
 @Component({
-  selector: 'home',
-  templateUrl: '../views/home.html',
+  selector: 'not-found',
+  templateUrl: '../views/404.html',
   providers: [
     UserService
   ]
 })
 
-export class HomeComponent implements OnInit{
-  public title = 'home component'
+export class NotFoundComponent implements OnInit{
+  public title = 'not found'
   public identity
   public token
   public url: string
@@ -31,10 +30,11 @@ export class HomeComponent implements OnInit{
   }
 
   ngOnInit(){
-    console.log('home')
+    console.log('not found component')
     if(!this.token){
       window.location.href = "/"
     }
   }
+
 
 }

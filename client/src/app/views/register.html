@@ -1,12 +1,12 @@
 
-<div class="wrapper fadeInDown">
+<div class="wrapper fadeInDown" id="register-container">
     <div id="formContent">
       <!-- Tabs Titles -->
   
       <!-- Icon -->
       <div class="fadeIn first">
         <a [routerLink]="['/']">
-          <img src="assets/images/kraken.png" id="icon" alt="Icon" />
+          <img src="template/img/kraken.png" id="icon" alt="Icon" />
         </a>
       </div>
       <!-- Message -->
@@ -14,32 +14,32 @@
   
       <!-- Register Form -->
       <form #registerForm="ngForm" (submit)="onSubmitRegister()">
-        <input type="text" class="fadeIn second" id="name" #name="ngModel" name="name" [(ngModel)]="user_register.name" placeholder="nombre" required>
-        <input type="text" class="fadeIn second" id="surname" #surname="ngModel" name="surname" [(ngModel)]="user_register.surname" placeholder="apellidos" required>
+        <input type="text" class="fadeIn second" id="name" #name="ngModel" name="name" [(ngModel)]="user_register.name" placeholder="name" required>
+        <input type="text" class="fadeIn second" id="surname" #surname="ngModel" name="surname" [(ngModel)]="user_register.surname" placeholder="surname" required>
         <input type="email" class="fadeIn second" id="email" #email="ngModel" name="email" [(ngModel)]="user_register.email" placeholder="email" required>
         <input type="password" class="fadeIn third" id="password" #password="ngModel" name="password" [(ngModel)]="user_register.password" placeholder="password" required>
         <div class="roles">
           <div class="form-check fadeIn third">
             <input class="form-check-input" type="radio" name="role" id="check_user" [(ngModel)]="user_register.role" value="ROLE_USER" cheked>
-            <label class="form-check-label" for="check_user">Usuario</label>
+            <label class="form-check-label" for="check_user">User</label>
           </div>
           <div class="form-check fadeIn third">
             <input class="form-check-input" type="radio" name="role" id="check_admin" #role="ngModel" [(ngModel)]="user_register.role" value="ROLE_ADMIN">
-            <label class="form-check-label" for="check_admin">Administrador</label>
+            <label class="form-check-label" for="check_admin">Admin</label>
           </div>
         </div>
         <div class="form-group fadeIn third input-file-container">
           <div class="input-group input-file">
-            <input type="text" class="form-control m-0 label-input-file" placeholder="avatar" readonly>
+            <input type="text" class="form-control m-0 label-input-file" placeholder="avatar" readonly disabled>
             <div class="input-group-btn">
               <span class="fileUpload btn">
-                <span class="upl" id="upload">Buscar</span>
+                <span class="upl" id="upload">Search</span>
                 <input type="file" class="upload up" id="up" (change)="fileChangeEvent($event)" accept="image/*" required/>
               </span>
             </div>
           </div>
         </div>
-        <input type="submit" class="fadeIn fourth btn-register" value="Registrarse">
+        <input type="submit" class="fadeIn fourth btn-register" value="Sing up">
       </form>
     </div>
   </div>

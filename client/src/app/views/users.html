@@ -1,0 +1,218 @@
+<!-- Begin Page Content -->
+<div class="container-fluid" *ngIf="identity.role == 'ROLE_ADMIN'">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Users</h1>
+    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+        For more information about DataTables, please visit the <a target="_blank"
+            href="https://datatables.net">official DataTables documentation</a>.</p>
+
+    <div class="row">
+        <!-- DataTales Example -->
+        <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                </div>
+                <div class="card-body">
+                    <a class="btn btn-primary btn-icon-split mb-3" data-toggle="modal" data-target="#addUserModal">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <span class="text">Add user</span>
+                    </a>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="usersTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Pic</th>
+                                    <th>Name</th>
+                                    <th>Surname</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Pic</th>
+                                    <th>Name</th>
+                                    <th>Surname</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </tfoot>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Donut Chart -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Donut Chart</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="chart-pie pt-4">
+                        <canvas id="usersChart"></canvas>
+                    </div>
+                    <hr>
+                    Styling for the donut chart can be found in the
+                    <code>/js/demo/chart-pie-demo.js</code> file.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->
+
+<!-- Add User Modal-->
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true" *ngIf="identity.role == 'ROLE_ADMIN'">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addUserModalLabel">Add user</h5>
+                <button class="close" id="btn-close-add-user" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form #registerForm="ngForm" (submit)="onSubmitRegister()">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="add-name">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="add-name" placeholder="John" #name="ngModel" name="name" [(ngModel)]="user_register.name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="add-surname">Surname</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="add-surname" placeholder="Doe" #surname="ngModel" name="surname" [(ngModel)]="user_register.surname" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="add-email">Email</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="add-email" placeholder="john.doe@mail.com" #email="ngModel" name="email" [(ngModel)]="user_register.email" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="add-role">Role</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="add-role" name="role" #role="ngModel" [(ngModel)]="user_register.role">
+                                <option value="ROLE_USER">User</option>
+                                <option value="ROLE_ADMIN">Admin</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="add-password">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="add-password" #password="ngModel" name="password" [(ngModel)]="user_register.password" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="add-image">Avatar</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control-file" id="add-image" (change)="fileChangeEvent($event)" accept="image/*" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary btn-submit">Add USer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- User Edit Modal-->
+<div class="modal fade" id="userEditModal" tabindex="-1" role="dialog" aria-labelledby="userEditModalLabel" aria-hidden="true" *ngIf="identity.role == 'ROLE_ADMIN'">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userEditModalLabel">Edit user</h5>
+                <button class="close" id="btn-close-edit-user" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form id="formEdit" #EditForm="ngForm" (submit)="onSubmitEdit()">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="edit-name">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="edit-name" placeholder="" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="edit-surname">Surname</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="edit-surname" placeholder="" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="edit-email">Email</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="edit-email" placeholder="" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="edit-role">Role</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="edit-role" required>
+                                <option value="ROLE_USER">User</option>
+                                <option value="ROLE_ADMIN">Admin</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="edit-password">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="edit-password" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="edit-image">Avatar</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control-file" id="edit-image" (change)="fileChangeEvent($event)" accept="image/*">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <img id="edit-pic" src="" alt="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="edit-id-user" value="">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary btn-submit">Edit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete User Modal-->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true" *ngIf="identity.role == 'ROLE_ADMIN'">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteUserModalLabel">Delete user</h5>
+                <button class="close" id="btn-close-delete-user" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Are you sure?</div>
+            <div class="modal-footer">
+                <input type="hidden" id="delete-id-user" value="">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-danger" (click)="deleteUser()">Delete user</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -9,12 +9,25 @@ const path = require('path')
 function pruebas(req, res){
   res.status(200).send({ message: 'pruebas de controlador'})
 }
+
+function getUsers(req, res){
+  User.find({}, (err, users) => {
+    if(err){
+      res.status(500).send({message: 'Error al actualizar el usuario'})
+    }else{
+      if(!users){
+        res.status(404).send({message: 'No se han podido obtener los usuarios'})
+      }else{
+        res.status(200).send({users})
+      }
+    }
+
+  })
+}
                                                
 function saveUser(req, res){
   let user = new User()
   let params = req.body
-
-  console.log(params)
 
   user.name = params.name
   user.surname = params.surname
@@ -81,23 +94,57 @@ function loginUser(req, res){
 function updateUser(req, res){
   let userId = req.params.id 
   let update = req.body
+  if(update.password){
+    bcrypt.hash(update.password, null, null, (err, hash) => {
+      update.password = hash
+      User.findByIdAndUpdate(userId, update, (err, userUpdated) => {
+        if(err){
+          res.status(500).send({message: 'Error al actualizar el usuario'})
+        }else{
+          if(!userUpdated){
+            res.status(404).send({message: 'No se ha podido actualizar el usuario'})
+          }else{
+            res.status(200).send({user: userUpdated})
+          }
+        }
+      })
+    })
+  }else{
+    User.findByIdAndUpdate(userId, update, (err, userUpdated) => {
+      if(err){
+        res.status(500).send({message: 'Error al actualizar el usuario'})
+      }else{
+        if(!userUpdated){
+          res.status(404).send({message: 'No se ha podido actualizar el usuario'})
+        }else{
+          res.status(200).send({user: userUpdated})
+        }
+      }
+    })
+  }
+  
+  
+  
+}
+
+function deleteUser(req, res){
+  let userId = req.params.id 
+  /*
   if(userId != req.user.sub){
     return res.status(500).send({message: 'No tienes permiso para actualizar el usuario'})
   }
-
-  User.findByIdAndUpdate(userId, update, (err, userUpdated) => {
+  */
+  User.deleteOne({_id: userId}, (err, userDeleted) => {
     if(err){
-      res.status(500).send({message: 'Error al actualizar el usuario'})
+      res.status(500).send({message: 'Error al eliminar el usuario'})
     }else{
-      if(!userUpdated){
-        res.status(404).send({message: 'No se ha podido actualizar el usuario'})
+      if(!userDeleted){
+        res.status(404).send({message: 'No se ha podido eliminar el usuario'})
       }else{
-        res.status(200).send({user: userUpdated})
+        res.status(200).send({user: userDeleted})
       }
     }
-
   })
-  
 }
 
 function uploadImageUser(req, res){
@@ -164,5 +211,7 @@ module.exports = {
   updateUser,
   uploadImageUser,
   uploadImage,
-  getImageFile
+  getImageFile,
+  getUsers,
+  deleteUser
 }

@@ -4,17 +4,16 @@ import { Router, ActivatedRoute, Params } from '@angular/router'
 import { GLOBAL } from '../services/global'
 import { UserService } from '../services/user.services'
 
-
 @Component({
-  selector: 'home',
-  templateUrl: '../views/home.html',
+  selector: 'buttons',
+  templateUrl: '../views/animations.html',
   providers: [
     UserService
   ]
 })
 
-export class HomeComponent implements OnInit{
-  public title = 'home component'
+export class AnimationsComponent implements OnInit{
+  public title = 'animations'
   public identity
   public token
   public url: string
@@ -31,7 +30,7 @@ export class HomeComponent implements OnInit{
   }
 
   ngOnInit(){
-    console.log('home')
+    console.log('animations component')
     if(!this.token){
       window.location.href = "/"
     }
