@@ -31,9 +31,6 @@ export class NotFoundComponent implements OnInit{
 
   ngOnInit(){
     console.log('not found component')
-    if(!this.token){
-      window.location.href = "/"
-    }
   }
 
 

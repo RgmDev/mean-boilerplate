@@ -47,7 +47,7 @@ export class AppComponent implements OnInit{
     localStorage.clear();
     this.identity = null
     this.token = null 
-    window.location.href = "/login"
+    window.location.href = "/"
   }
 
 

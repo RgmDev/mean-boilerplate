@@ -31,7 +31,7 @@ const AppRoutes: Routes = [
   { path: 'charts', component: ChartsComponent },
   { path: 'tables', component: TablesComponent },
   { path: 'users', component: UsersComponent },
-  { path: '**', component: LoginComponent }
+  { path: '**', component: NotFoundComponent }
 ]
 
 export const appRoutingProviders: any[] = []
