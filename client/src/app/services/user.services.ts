@@ -36,7 +36,6 @@ export class UserService{
   }
 
   update_user(user_to_update){
-    console.log(user_to_update)
     let json = JSON.stringify(user_to_update)
     let params = json
     let headers = new Headers({
@@ -66,6 +65,22 @@ export class UserService{
       this.token = null
     }
     return this.token
+  }
+
+  cleanLocalStorage(){
+    localStorage.removeItem('identity')
+    localStorage.removeItem('token')
+    localStorage.clear();
+  }
+
+  getInfoToken(){
+    let headers = new Headers({
+      'Content-type': 'application/json',
+      'Authorization': this.getToken()
+    })
+    let options = new RequestOptions({ headers : headers })
+    return this._http.get(this.url+'user/infoToken', options)
+      .map(res => res.json())
   }
 
   getUsers(){

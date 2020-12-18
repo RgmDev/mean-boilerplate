@@ -33,12 +33,13 @@ export class AppComponent implements OnInit{
     private _route: ActivatedRoute,
     private _router: Router
   ){
+    this.identity = this._userService.getIdentity()
+    this.token = this._userService.getToken()
     this.url = GLOBAL.url
   }
 
   ngOnInit(){
-    this.identity = this._userService.getIdentity()
-    this.token = this._userService.getToken()
+    console.log('app component')
   }
 
   public logOut(){

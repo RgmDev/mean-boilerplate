@@ -13,12 +13,9 @@ exports.ensureAuth = function(req, res, next){
   let payload
   try{
     payload = jwt.decode(token, secret)
-    if(payload.exp <= moment().unix){
-      return res.status(401).send({message: 'Token ha expirado'})
-    }
   }catch(ex){
     console.log(ex)
-    return res.status(404).send({message: 'Token no valido'})
+    return res.status(401).send({message: ex.message})
   }
 
   req.user = payload

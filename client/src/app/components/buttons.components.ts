@@ -26,15 +26,24 @@ export class ButtonsComponent implements OnInit{
     this.identity = this._userService.getIdentity()
     this.token = this._userService.getToken()
     this.url = GLOBAL.url
-    
   }
 
   ngOnInit(){
     console.log('buttons component')
-    if(!this.token){
-      window.location.href = "/"
-    }
+    this._userService.getInfoToken().subscribe(
+      response => { 
+        console.log('Valid token')
+      }, 
+      error => {
+          console.log(error)
+          this.identity = null
+          this.token = null
+          this._userService.cleanLocalStorage()
+          window.location.href = "/"
+      }
+    )
   }
 
 
 }
+

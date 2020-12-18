@@ -38,9 +38,18 @@ export class UsersComponent implements OnInit{
 
   ngOnInit(){
     console.log('users component')
-    if(!this.token){
-      window.location.href = "/"
-    }
+    this._userService.getInfoToken().subscribe(
+      response => { 
+        console.log('Valid token')
+      }, 
+      error => {
+          console.log(error)
+          this.identity = null
+          this.token = null
+          this._userService.cleanLocalStorage()
+          window.location.href = "/"
+      }
+    )
   }
 
   onSubmitRegister(){ 

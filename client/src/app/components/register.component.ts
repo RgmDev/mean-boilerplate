@@ -37,6 +37,9 @@ export class RegisterComponent implements OnInit{
   ngOnInit(){
     this.identity = this._userService.getIdentity()
     this.token = this._userService.getToken()
+    if(this.token){
+      window.location.href = '/home'
+    }
     $(document).on('change','.up', function(){
       if($(this).get(0).files.length > 0){
         $(this).closest('.form-group').find('.form-control').attr("value",$(this).get(0).files[0].name)

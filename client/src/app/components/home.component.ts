@@ -32,9 +32,19 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(){
     console.log('home')
-    if(!this.token){
-      window.location.href = "/"
-    }
+    this._userService.getInfoToken().subscribe(
+      response => { 
+        console.log('Valid token')
+      }, 
+      error => {
+          console.log(error)
+          this.identity = null
+          this.token = null
+          this._userService.cleanLocalStorage()
+          window.location.href = "/"
+      }
+    )
+    
   }
 
 }

@@ -11,9 +11,14 @@ exports.createToken = function(user){
     surname: user.surname,
     email: user.email,
     role: user.role,
-    imagen: user.imagen,
-    iat: moment().unix,
-    exp: moment().add(30, 'days').unix
+    imagen: user.image,
+    iat: moment().unix(),
+    exp: moment().add(1, 'days').unix()
   }
   return jwt.encode(payload, secret)
+}
+
+exports.decodeToken = function(token){
+  let payload = jwt.decode(token, secret)
+  return payload
 }

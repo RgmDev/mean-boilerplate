@@ -36,6 +36,9 @@ export class LoginComponent implements OnInit{
     console.log('login component')
     this.identity = this._userService.getIdentity()
     this.token = this._userService.getToken()
+    if(this.token){
+      window.location.href = '/home'
+    }
   }
 
   public onSubmit(){

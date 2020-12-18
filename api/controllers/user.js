@@ -64,7 +64,7 @@ function loginUser(req, res){
   let params = req.body
   let email = params.email
   let password = params.password
-
+  
   User.findOne({email: email.toLowerCase()}, (err, user) => {
     if(err){
       res.status(500).send({message: 'Error en la peticion'})
@@ -88,6 +88,7 @@ function loginUser(req, res){
       }
     }
   })
+  
 
 }
 
@@ -204,6 +205,12 @@ function getImageFile(req, res){
   })
 }
 
+function infoToken(req, res){
+  let token = req.headers.authorization.replace(/['"]+/g, '')
+  let info_token = jwt.decodeToken(token)
+  res.status(200).send({ info_token })
+}
+
 module.exports = {
   pruebas,
   saveUser,
@@ -213,5 +220,6 @@ module.exports = {
   uploadImage,
   getImageFile,
   getUsers,
-  deleteUser
+  deleteUser,
+  infoToken
 }
